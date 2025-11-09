@@ -16,16 +16,6 @@ export const linkClicks = sqliteTable("link_clicks", {
 	index("idx_link_clicks_clicked_time").on(table.clickedTime),
 ]);
 
-export const destinatioNEvaluations = sqliteTable("destinatioN_evaluations", {
-	id: text().primaryKey(),
-	linkId: text("link_id").notNull(),
-	accountId: text("account_id").notNull(),
-	destinationUrl: text("destination_url").notNull(),
-	status: text().notNull(),
-	reason: text().notNull(),
-	createdAt: numeric("created_at").default(sql`(CURRENT_TIMESTAMP)`).notNull(),
-});
-
 export const links = sqliteTable("links", {
 	linkId: text("link_id").primaryKey().notNull(),
 	accountId: text("account_id").notNull(),
@@ -33,5 +23,15 @@ export const links = sqliteTable("links", {
 	created: numeric().default(sql`(CURRENT_TIMESTAMP)`).notNull(),
 	updated: numeric().default(sql`(CURRENT_TIMESTAMP)`).notNull(),
 	name: text(),
+});
+
+export const destinationEvaluations = sqliteTable("destination_evaluations", {
+	id: text().primaryKey(),
+	linkId: text("link_id").notNull(),
+	accountId: text("account_id").notNull(),
+	destinationUrl: text("destination_url").notNull(),
+	status: text().notNull(),
+	reason: text().notNull(),
+	createdAt: numeric("created_at").default(sql`(CURRENT_TIMESTAMP)`).notNull(),
 });
 
