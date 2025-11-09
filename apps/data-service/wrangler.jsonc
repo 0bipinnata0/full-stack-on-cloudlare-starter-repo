@@ -52,6 +52,7 @@
 	},
 	"ai": {
 		"binding": "AI",
+		"remote": true
 	},
 	"r2_buckets": [
 		{
@@ -69,18 +70,20 @@
 				"name": "EVALUATION_SCHEDULAR",
 				"class_name": "EvaluationScheduler"
 			},
-		
 		]
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_classes": ["EvaluationScheduler"],
-
+			"new_classes": [
+				"EvaluationScheduler"
+			],
 		},
 		{
 			"tag": "v2",
-			"new_sqlite_classes": ["LinkClickTracker"]
+			"new_sqlite_classes": [
+				"LinkClickTracker"
+			]
 		},
 	]
 }
