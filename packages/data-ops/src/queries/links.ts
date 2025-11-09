@@ -9,10 +9,10 @@ export async function createLink(
   const db = getDb();
   const id = nanoid(10);
   await db.insert(links).values({
-    linkdId: id,
+    linkId: id,
     accountId: data.accountId,
     name: data.name,
-    destinatinos: JSON.stringify(data.destinations),
+    destinations: JSON.stringify(data.destinations),
   });
 
   return id;
