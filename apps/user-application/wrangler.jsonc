@@ -16,6 +16,12 @@
   },
   "env": {
     "stage": {
+      "routes": [
+        {
+          "custom_domain": true,
+          "pattern": "stage.lightlk.com"
+        }
+      ],
       "d1_databases": [
         {
           "binding": "DB",
@@ -32,12 +38,18 @@
       ]
     },
     "production": {
-			"d1_databases": [
-				{
-					"binding": "DB",
-					"database_id": "7d9e0e9a-f531-4b89-bd1c-0be89013e9a3"
-				}
-			],
+      "routes": [
+        {
+          "custom_domain": true,
+          "pattern": "lightlk.com"
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_id": "7d9e0e9a-f531-4b89-bd1c-0be89013e9a3"
+        }
+      ],
       "services": [
         {
           "binding": "BACKEND_SERVICE",
