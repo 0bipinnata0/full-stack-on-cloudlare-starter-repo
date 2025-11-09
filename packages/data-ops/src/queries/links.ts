@@ -1,6 +1,6 @@
 import { getDb } from "@/db/database";
 import { links } from "@/drizzle-out/schema";
-import { CreateLinkSchemaType } from "@/zod/links";
+import { CreateLinkSchemaType, destinationsSchema, DestinationsSchemaType, linkSchema } from "@/zod/links";
 import { eq, gt, and, desc } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
@@ -38,4 +38,38 @@ export async function getLinks(accountId: string, createdBefore?: string) {
     linkClicks: 6,
     destinations: Object.keys(JSON.parse(link.destinations)).length
   }))
+}
+
+export async function updateLinkName(linkId: string, name: string) {
+  const db = getDb();
+  await db.update(links)
+    .set({ name, updated: new Date().toISOString() })
+    .where(eq(links.linkId, linkId))
+}
+
+export async function getLink(linkId: string) {
+  const db = getDb();
+  const result = await db.select().from(links).where(eq(links.linkId, linkId)).limit(1)
+
+  const link = result[0]
+  if (!link) {
+    throw new Error('Link not found')
+  }
+  const parsedLink = linkSchema.safeParse(link)
+  if (!parsedLink.success) {
+    throw new Error('Link data is invalid')
+  }
+  return parsedLink.data
+}
+
+
+export async function updateLinkDestinations(linkId: string, destinations: DestinationsSchemaType) {
+  const parsedDestinations = destinationsSchema.safeParse(destinations)
+  if (!parsedDestinations.success) {
+    throw new Error('Destinations data is invalid')
+  }
+  const db = getDb();
+  await db.update(links)
+    .set({ destinations: JSON.stringify(parsedDestinations.data) })
+    .where(eq(links.linkId, linkId))
 }
